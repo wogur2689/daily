@@ -1,0 +1,13 @@
+body {
+    background-color: hwb(352 38% 0%);
+    font-size: 12px
+}
+h2 {
+    font-size: 15px;
+    text-align: left;
+}
+.icon-border {
+    background-color: white;
+    display:block;
+    border:1px solid black;
+}
