@@ -21,6 +21,10 @@
         }
     </style> -->
     <link rel="stylesheet" type="html/css" href="./resouces/css/style.css">
+    <!-- summernote-lite -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 <body>
     <h1>Keeping a Diary</h1>
@@ -30,17 +34,27 @@
 width="13" height="13">
 <h2>
     제목 : <input type="text" style="width:600px;">
+    <input type = 'button' class='btn' name='btn'value='완료'>
 </h2>
 <h3>
-    <input type = "image" src="./resouces/img/KakaoTalk_20230110_031406202.png" width="13" height="15"/>
-    <input type = "image" src="./resouces/img/KakaoTalk_20230110_031420435.png" width="16" height="15"/>
-    <input type = "image" src="./resouces/img/KakaoTalk_20230110_031426464.png" width="16" height="15"/>
-    <input type = "image" src="./resouces/img/KakaoTalk_20230110_031430280.png" width="16" height="15"/>
-
-    <input type = 'button' class='btn' name='btn'value='완료'style="float:right;">
-        <textarea rows="20" cols=175 wrap="hard"></textarea>
+    <div id="summernote"></div>
     <div style ="width: 400px; height:100px;word-break:break-all;overflow:auto;"></div>
-</div>
 </h3>
 </body>
+<script>
+    $('#summernote').summernote({
+      placeholder: '',
+      tabsize: 1,
+      height: 200,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+      ]
+    });
+  </script>
 </html>
