@@ -20,8 +20,5 @@ router.get("/write", (req, res) => {
         code: "success"
     }) //파일 랜더링
 });
-// router.get("/login", (req, res) => {
-//     res.render("main/login", {title: "로그인페이지", code: "ejs good"}) //파일 랜더링
-// });
 
 module.exports = router; //모듈로 던지기
