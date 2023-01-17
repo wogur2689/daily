@@ -3,6 +3,7 @@
 
 const express = require('express'); //express import
 const router = express.Router(); //express import
+const fs = require('fs'); //express import
 
 //라우팅하는 것들은 라우트에서 관리
 //get방식 통신 
@@ -19,6 +20,15 @@ router.get("/write", (req, res) => {
         title: "Keeping a Diary",
         code: "success"
     }) //파일 랜더링
+});
+
+//이미지 불러오기
+router.get("/image/:name", (req, res) => {
+    console.log(req.params);
+    fs.readFile("./resouces/img/" + req.params.name, (err, data) => {
+        res.writeHead(200, {'Context-Type':'text/html'});
+        res.end(data);
+    }) 
 });
 
 module.exports = router; //모듈로 던지기
