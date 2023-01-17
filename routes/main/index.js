@@ -3,28 +3,19 @@
 
 const express = require('express'); //express import
 const router = express.Router(); //express import
+const ctrl = require('./main.ctrl'); //import
 const fs = require('fs'); //express import
 
 //라우팅하는 것들은 라우트에서 관리
 //get방식 통신 
 // 첫번째는 url, 두번째는 서버로 보낼 요청값과 결과값
-router.get("/", (req, res) => {
-    res.render("main/index", {
-        title: "My Diary",
-        code: "success"
-    }) //파일 랜더링
-});
+router.get("/", ctrl.main);
+router.get("/write", ctrl.write);
 
-router.get("/write", (req, res) => {
-    res.render("main/write", {
-        title: "Keeping a Diary",
-        code: "success"
-    }) //파일 랜더링
-});
+module.exports = router; //모듈로 던지기
 
 //이미지 불러오기
 router.get("/image/:name", (req, res) => {
-    console.log(req.params);
     fs.readFile("./resouces/img/" + req.params.name, (err, data) => {
         res.writeHead(200, {'Context-Type':'text/html'});
         res.end(data);
