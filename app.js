@@ -1,8 +1,9 @@
+"use strict"; //ECMA 스크립트 문법 준수
+//자바스크립트 파일을 만들시에는 써줘야함.
+
 //모듈
 const express = require('express');
 const app = express();
-
-const port = 3000; //서버 포트
 
 //라우팅
 const home = require('./routes/main');
@@ -14,6 +15,4 @@ app.set("view engine", "ejs"); //확장자
 
 app.use("/", home); //미들웨어 등록
 
-app.listen(port, function () { 
-    console.log('서버 가동');
-});
+module.exports = app;

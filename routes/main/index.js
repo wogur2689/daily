@@ -12,8 +12,6 @@ const fs = require('fs'); //express import
 router.get("/", ctrl.main);
 router.get("/write", ctrl.write);
 
-module.exports = router; //모듈로 던지기
-
 //이미지 불러오기
 router.get("/image/:name", (req, res) => {
     fs.readFile("./resouces/img/" + req.params.name, (err, data) => {
