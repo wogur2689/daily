@@ -6,12 +6,13 @@ const express = require('express');
 const app = express();
 
 //라우팅
-const home = require('./routes/main');
+const home = require('./src/routes/main');
 
 //app 세팅
 app.engine('html', require('ejs').renderFile);
-app.set("views", "./views"); //경로
+app.set("views", "./src/views"); //경로
 app.set("view engine", "ejs"); //확장자
+app.set(express.static(`{__dirname}/src/public`)); //정적 경로 추가
 
 app.use("/", home); //미들웨어 등록
 
