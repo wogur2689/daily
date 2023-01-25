@@ -13,11 +13,11 @@ router.get("/", ctrl.main);
 router.get("/write", ctrl.write);
 
 //이미지 불러오기
-router.get("/image/:name", (req, res) => {
-    fs.readFile("./resouces/img/" + req.params.name, (err, data) => {
-        res.writeHead(200, {'Context-Type':'text/html'});
-        res.end(data);
-    }) 
-});
+// router.get("/image/:name", (req, res) => {
+//     fs.readFile("./resouces/img/" + req.params.name, (err, data) => {
+//         res.writeHead(200, {'Context-Type':'text/html'});
+//         res.end(data);
+//     }) 
+// });
 
 module.exports = router; //모듈로 던지기
