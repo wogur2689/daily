@@ -1,23 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- css -->
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/reset.css">
-    
-    <!-- js -->
-    <script src="/js/main/index.js"></script>
-    <title><%=title%></title>
+    <title><%= title %></title>
+    <style>
+        body {
+            font-size: 14px;
+        }
+        table{
+            width : 500px;
+            height : 30px;
+            border-collapse: collapse;
+        }
+        table td,
+        table th{
+            text-align: center;
+            padding: 5px;
+            border : 1px solid lightgray;
+            font-size: 9px;
+        }
+        table th{
+            background-color: hwb(352 38% 0%);
+            color:black;
+            font-size: 11px;
+        }
+        
+        table caption {
+            text-align: right;
+            margin-bottom: 5px;
+            font-size: 7px;
+        }
+        button{
+            text-align: center;
+            border : 1px solid lightgray;
+            background-color: hwb(352 38% 0%);
+            font-size: 11px;
+            trasition:all 0.1s;
+        }
+        button:active{
+            transform: translateY(2px);  
+        }
+        input[type="checkbox"] {
+            display: inline-block;
+            width: auto;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
-    <div id="main">
-        <h1>나의 일기</h1>
-        <img src="/images/history_edu.png" alt="그림">
-    </div>
-    <input type="date" required pattern="\d{4}-\d{2}-\d{2}"> ~ <input type="date" required pattern="\d{4}-\d{2}-\d{2}">
+    <body>
+        <h1>Daily</h1>
+        <input type ="date"> ~ <input type ="date"> <input type="image" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F158%2F158861.png&type=sc960_832"
+        width="13" height="13"> 
+        <table>
+            <caption>
+                다이어리를 선택해주세요
+            </caption>
+            <tr>
+                <th>날짜</th>
+                <th>제목</th>
+                <th>수정날짜</th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox">
+                    2022-01-01</td>
+                <td>오늘 하루 조옥같은 날이었다.</td>
+                <td>2022-01-01</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox">
+                    2022-01-01
+                </td>
+                <td>오늘은 표지를 만들어 보았다.</td>
+                <td>-</td>
+            </tr>
+        </table>
+        <div>
+            <input type="button" value="다이어리 작성" onclick="location.href='/write'">
+            <button>다이어리 수정</button>
+            <button>다이어리 삭제</button>
+        </div>
+    </body>
 </body>
 </html>
