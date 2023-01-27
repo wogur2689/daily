@@ -1,7 +1,6 @@
-body {
+/* body {
     background-color: hwb(352 38% 0%);
-    font-size: 12px
-}
+} */
 h2 {
     font-size: 15px;
     text-align: left;
@@ -10,4 +9,43 @@ h2 {
     background-color: white;
     display:block;
     border:1px solid black;
+}
+
+table{
+    width : 500px;
+    height : 30px;
+    border-collapse: collapse;
+}
+table td,
+table th{
+    text-align: center;
+    padding: 5px;
+    border : 1px solid lightgray;
+    font-size: 9px;
+}
+table th{
+    background-color: hwb(352 38% 0%);
+    color:black;
+    font-size: 11px;
+}
+
+table caption {
+    text-align: right;
+    margin-bottom: 5px;
+    font-size: 7px;
+}
+button{
+    text-align: center;
+    border : 1px solid lightgray;
+    background-color: hwb(352 38% 0%);
+    font-size: 11px;
+    trasition:all 0.1s;
+}
+button:active{
+    transform: translateY(2px);  
+}
+input[type="checkbox"] {
+    display: inline-block;
+    width: auto;
+    height: auto;
 }
