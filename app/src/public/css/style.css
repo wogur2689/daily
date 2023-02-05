@@ -50,3 +50,8 @@ input[type="checkbox"] {
     width: auto;
     height: auto;
 }
+
+/* main */
+#title {
+    font-size: 30px;
+}

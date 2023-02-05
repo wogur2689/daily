@@ -6,7 +6,7 @@
  * @param {\} req 
  * @param {*} res 
  */
-const main = (req, res) => {
+const mainPage = (req, res) => {
     res.render("main/index", {
         title: "My Diary",
         code: "success"
@@ -18,8 +18,18 @@ const main = (req, res) => {
  * @param {\} req 
  * @param {*} res 
  */
-const write = (req, res) => {
+const writePage = (req, res) => {
     res.render("main/write", {
+        title: "Keeping a Diary",
+        code: "success"
+    }) //파일 랜더링
+}
+
+/**
+ * 일기 읽기
+ */
+const readPage = (req, res) => {
+    res.render("main/read", {
         title: "Keeping a Diary",
         code: "success"
     }) //파일 랜더링
@@ -27,6 +37,7 @@ const write = (req, res) => {
 
 //index.js에서 사용하기 위해 모듈로 주입
 module.exports = {
-    main,
-    write
+    mainPage,
+    writePage,
+    readPage
 };
