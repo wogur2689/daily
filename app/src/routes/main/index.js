@@ -9,9 +9,11 @@ const fs = require('fs'); //express import
 //라우팅하는 것들은 라우트에서 관리
 //get방식 통신 
 // 첫번째는 url, 두번째는 서버로 보낼 요청값과 결과값
-router.get("/", ctrl.mainPage);
-router.get("/write", ctrl.writePage);
-router.get("/read", ctrl.readPage);
+router.get("/", ctrl.output.mainPage);
+router.get("/write", ctrl.output.writePage);
+router.get("/read", ctrl.output.readPage);
+
+router.post("/save", ctrl.process.save);
 
 //이미지 불러오기
 // router.get("/image/:name", (req, res) => {

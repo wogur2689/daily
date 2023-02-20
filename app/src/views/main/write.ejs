@@ -22,8 +22,8 @@
 <input type = "date"></import>  첨부 <input type = "image" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fimg-premium.flaticon.com%2Fpng%2F512%2F4812%2F4812049.png%3Ftoken%3Dexp%3D1630468264%7Ehmac%3D9509f9ac6305365c9073d151225eeb00&type=sc960_832"
 width="13" height="13">
 <h2>
-    제목 : <input type="text" style="width:600px;">
-    <input type = 'button' class='btn' name='btn'value='완료'>
+    제목 : <input type="text" id="title" style="width:600px;">
+    <input type = 'button' class='btn' id="saveBtn" name='btn' value='완료'>
 </h2>
 <h3>
     <div id="summernote"></div>
@@ -31,6 +31,8 @@ width="13" height="13">
 </h3>
 </body>
 <script>
+  $(document).ready(function() {
+
     $('#summernote').summernote({
       placeholder: '',
       tabsize: 1,
@@ -45,5 +47,33 @@ width="13" height="13">
         ['view', ['fullscreen', 'codeview', 'help']]
       ]
     });
+
+    $(document).on('click', '#saveBtn', function () {
+        saveContent();
+    });
+  })
+  
+  //저장
+  function saveContent() {
+      //제목 가져오기
+      var title = $('#title').val();
+      //값 가져오기
+      var content = $('#summernote').summernote('code');        //썸머노트(설명)
+      console.log("title : " + title);
+      console.log("summernoteContent : " + content);
+      
+      const req = {
+        title: title,
+        content: content
+      }
+      //서버 전송
+      fetch("/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(req)
+      });
+  }
   </script>
 </html>
