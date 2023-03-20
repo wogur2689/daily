@@ -2,9 +2,10 @@
 //자바스크립트 파일을 만들시에는 써줘야함.
 
 const app = require("../app");
+const logger = require("../src/config/logger"); //로그 관리 모듈
 
-const port = 3000; //서버 포트
+const PORT = process.env.PORT || 3000; //서버 포트 default 3000
 
-app.listen(port, () => {
-    console.log('서버 가동');
+app.listen(PORT, () => {
+    logger.info(`${PORT} 포트에서 서버가 가동되었습니다.`);
 });

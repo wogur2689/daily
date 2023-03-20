@@ -71,7 +71,7 @@
           "Content-Type": "application/json"
         },
         body: JSON.stringify(req)
-      });
+      }).then((res) => res.json()).catch((err) => err.json());
   }
   </script>
 </html>
