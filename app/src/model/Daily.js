@@ -26,14 +26,14 @@ class Daily {
     }
 
     //일기 읽기
-    async readDaily() {
+    async read() {
         const client = this.body; //클라이언트 값
         try {
-            const data = await DataStorage.read();
-            return { success: false, data: data };
+            const data = await DataStorage.getDaily();
+            return { data: data };
         }
         catch (err) {
-            return { success: false, err };
+            return { err };
         }
     }
 }

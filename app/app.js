@@ -20,4 +20,6 @@ app.use("/", express.static(__dirname+'/src/public')); //정적 경로 추가
 app.use(bodyParser.json()); //json데이터 파싱
 app.use(bodyParser.urlencoded({ extended: true })); //URL을 통해 전달되는 데이터 한글, 공백 등과 같은 문자가 포함될 경우 제대로 인식되지 않는 문제 해결
 
+app.locals.moment = require('moment');//날짜 형식 변환
+
 module.exports = app;
