@@ -35,7 +35,7 @@
                 <% for(var data of dailys) { %>
                 <tr>
                     <td><%= moment(data.create_at).format('YYYY-MM-DD') %></td>
-                    <td><a href="#"><%= data.title %></a></td>
+                    <td><a href="/read/<%= data.id %>"><%= data.title %></a></td>
                     <td><%= moment(data.update_at).format('YYYY-MM-DD') %></td>
                 </tr>    
                 <% } %>
@@ -43,8 +43,6 @@
         </table>
         <div>
             <button type="button" onclick="location.href='/write'">다이어리 작성</button>
-            <button>다이어리 수정</button>
-            <button>다이어리 삭제</button>
         </div>
     </body>
 </body>

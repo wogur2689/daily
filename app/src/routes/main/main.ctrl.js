@@ -3,7 +3,10 @@
 
 const logger = require("../../config/logger");
 const Daily = require("../../model/Daily");
-const DateToString = require("../../util/DateUtil");
+const DateUtil = require("../../util/DateUtil");
+
+//고정변수
+const title = "My Diary"
 
 //page
 const output = {
@@ -13,12 +16,12 @@ const output = {
      * @param {*} res 
      */
     mainPage: async (req, res) => {
-        logger.info(`GET / 200 "메인 화면"`);
-        const daily = new Daily(); //서비스 객체 생성
-        let response = await daily.read(); //데이터 읽어오기
+        logger.info(`GET / "메인 화면"`);
+        const daily = new Daily(req.body); //서비스 객체 생성
+        let response = await daily.getDailyList(); //전체 데이터 읽어오기
         
         res.render("main/index", {
-            title: "My Diary",
+            title: title,
             code: "success",
             dailys: response.data
         }) //파일 랜더링
@@ -31,8 +34,9 @@ const output = {
      */
     writePage: (req, res) => {
         logger.info(`GET /write "일기 작성화면"`);
+
         res.render("main/write", {
-            title: "My Diary",
+            title: title,
             code: "success"
         }) //파일 랜더링
     },
@@ -42,10 +46,26 @@ const output = {
      * @param {\} req 
      * @param {*} res
      */
-    readPage: (req, res) => {
-        logger.info(`GET /register 304 "회원가입 화면으로 이동"`);
+    readPage: async(req, res) => {
+        logger.info(`GET /read "일기 내용"`);
+        const daily = new Daily(req.params.id); //서비스 객체 생성
+        let response = await daily.read(); //전체 데이터 읽어오기
+        
         res.render("main/read", {
-            title: "Keeping a Diary",
+            title: title,
+            code: "success"
+        }) //파일 랜더링
+    },
+
+    /**
+     * 일기 수정
+     * @param {*} req 
+     * @param {*} res 
+     */
+    changePage: (req, res) => {
+        logger.info(`GET /change "일기 수정"`);
+        res.render("main/change", {
+            title: title,
             code: "success"
         }) //파일 랜더링
     }
@@ -56,13 +76,13 @@ const process = {
     /**
      * 일기 저장
      */
-    save: async (req, res) => {
+    create: async (req, res) => {
         const daily = new Daily(req.body); //서비스 객체 생성
-        const response = await daily.save(); //save
+        const response = await daily.create();
 
         const url = {
             method:"POST",
-            path:"/save",
+            path:"/create",
             status: response.err ? 404 : 200,
         }
 
@@ -80,6 +100,40 @@ const process = {
         const url = {
             method:"POST",
             path:"/read",
+            status: response.err ? 400 : 200,
+        }
+
+        log(response, url);
+        return res.status(url.status).json(response); //json 반환
+    },
+
+    /**
+     * 일기 수정
+     */
+    update: async (req, res) => {
+        const daily = new Daily(req.body); //서비스 객체 생성
+        const response = await daily.read(); //read
+
+        const url = {
+            method:"POST",
+            path:"/update",
+            status: response.err ? 400 : 200,
+        }
+
+        log(response, url);
+        return res.status(url.status).json(response); //json 반환
+    },
+
+    /**
+     * 일기 삭제
+     */
+    delete: async (req, res) => {
+        const daily = new Daily(req.body); //서비스 객체 생성
+        const response = await daily.read(); //read
+
+        const url = {
+            method:"POST",
+            path:"/delete",
             status: response.err ? 400 : 200,
         }
 

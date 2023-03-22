@@ -3,14 +3,49 @@
 
 const moment = require("moment");
 
-/**
- * date -> String
- * @param {*} date 
- * @returns 
- */
+const DateUtil = {
+    /**
+     * date -> String
+     * @param {*} date 
+     * @returns 
+     */
+    DateToString: (date) => {
+        return moment(date).toString();
+    },
 
-const DateToString = (date) => {
-    return moment(date).toString();
+    /**
+     * yyyy-mm-dd
+     * @param {*} date 
+     * @returns 
+     */
+    getDateStrYYYYMMDD: (date) => {
+        var year = date.getFullYear();
+        var month = ("0"+(date.getMonth()+1)).slice(-2);
+        var day = ("0"+date.getDate()).slice(-2);
+        return ( year + '-' + month + '-' + day );
+    },
+
+    /**
+     * 몇일 전 날짜
+     * @param {*} days (일)
+     * @returns 
+     */
+    prevDay: (days) => {
+        var d = new Date();
+        var prev = d.getDate() - days;
+        return getDateStrYYYYMMDD(prev);
+    },
+
+    /**
+     * 몇개월 전 날짜
+     * @param {*} month (월)
+     * @returns 
+     */
+    prevMonth: (month) => {
+        var d = new Date();
+        var prev = d.getMonth() - month;
+        return getDateStrYYYYMMDD(prev);
+    }
 }
 
-module.exports = DateToString;
+module.exports = DateUtil;

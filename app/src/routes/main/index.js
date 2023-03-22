@@ -11,9 +11,11 @@ const fs = require('fs'); //express import
 // 첫번째는 url, 두번째는 서버로 보낼 요청값과 결과값
 router.get("/", ctrl.output.mainPage);
 router.get("/write", ctrl.output.writePage);
-router.get("/read", ctrl.output.readPage);
+router.get("/read/:id", ctrl.output.readPage);
 
-router.post("/save", ctrl.process.save);
+router.post("/create", ctrl.process.create);
+router.post("/update", ctrl.process.update);
+router.post("/delete", ctrl.process.delete);
 
 //이미지 불러오기
 // router.get("/image/:name", (req, res) => {

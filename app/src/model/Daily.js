@@ -2,9 +2,6 @@
 
 /**
  * Spring의 service 로직
- */
-
-/**
  * 해당 데이터를 가지고 검증 및 조작
  */
 const DataStorage = require("./DataStorage");
@@ -14,8 +11,20 @@ class Daily {
         this.body = body; //기본생성자
     }
 
+    //일기 리스트
+    async getDailyList() {
+        const client = this.body; //클라이언트 값
+        try {
+            const data = await DataStorage.getDailyList(client);
+            return { data: data };
+        }
+        catch (err) {
+            return { success: false, msg: err };
+        }
+    }
+
     //일기 저장
-    async save() {
+    async create() {
         const client = this.body; //클라이언트 값
         try {
             const response = await DataStorage.save(client);
