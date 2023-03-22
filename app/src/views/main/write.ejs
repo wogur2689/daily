@@ -16,11 +16,10 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 <body>
-    <h1>Keeping a Diary</h1>
-<div class="icon-border">날짜
-<input type = "date">
+    <h1>일기 작성</h1>
 <h2>
     제목 : <input type="text" id="title" style="width:600px;">
+    작성자 : <input type="text" id="userName" style="width:50px;">
     <button class="custom-btn btn-3" id="saveBtn">저장하기</button>
 </h2>
 <h3>
@@ -53,25 +52,35 @@
   
   //저장
   function saveContent() {
-      //제목 가져오기
+      //제목
       var title = $('#title').val();
-      //값 가져오기
-      var content = $('#summernote').summernote('code');        //썸머노트(설명)
-      console.log("title : " + title);
-      console.log("summernoteContent : " + content);
+      //작성자
+      var userName = $('#userName').val();
+      //내용
+      var content = $('#summernote').summernote('code');
+
+      //vaild
+      if(!title) return alert('제목을 입력해주세요.');
+      if(!userName) return alert('작성자를 입력해주세요.');
       
       const req = {
         title: title,
-        content: content
+        userName: userName,
+        content: content,
       }
+      console.log(req);
       //서버 전송
-      fetch("/save", {
-        method: "POST",
+      fetch("http://localhost:3000/save", {
+        method: "post",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(req)
-      }).then((res) => res.json()).catch((err) => err.json());
+        body: JSON.stringify(req),
+      }).then((res) => {//성공
+        alert('일기가 작성되었습니다.')
+      }).catch((err) => //실패
+        console.log(err)
+      );
   }
   </script>
 </html>

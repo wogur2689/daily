@@ -30,9 +30,9 @@ const output = {
      * @param {*} res 
      */
     writePage: (req, res) => {
-        logger.info(`GET /login 304 "로그인 화면으로 이동"`);
+        logger.info(`GET /write "일기 작성화면"`);
         res.render("main/write", {
-            title: "Keeping a Diary",
+            title: "My Diary",
             code: "success"
         }) //파일 랜더링
     },
@@ -55,8 +55,6 @@ const output = {
 const process = {
     /**
      * 일기 저장
-     * @param {*} req 
-     * @param {*} res 
      */
     save: async (req, res) => {
         const daily = new Daily(req.body); //서비스 객체 생성
@@ -65,7 +63,7 @@ const process = {
         const url = {
             method:"POST",
             path:"/save",
-            status: response.err ? 409 : 201,
+            status: response.err ? 404 : 200,
         }
 
         log(response, url);
@@ -74,8 +72,6 @@ const process = {
 
     /**
      * 일기 읽기
-     * @param {*} req 
-     * @param {*} res 
      */
     read: async (req, res) => {
         const daily = new Daily(req.body); //서비스 객체 생성

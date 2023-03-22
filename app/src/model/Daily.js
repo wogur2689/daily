@@ -21,7 +21,7 @@ class Daily {
             const response = await DataStorage.save(client);
             return response;
         } catch (err) {
-            return { success: false, err };
+            return { success: false, msg: err };
         }
     }
 
@@ -33,7 +33,7 @@ class Daily {
             return { data: data };
         }
         catch (err) {
-            return { err };
+            return { success: false, msg: err };
         }
     }
 }

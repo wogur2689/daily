@@ -9,10 +9,12 @@ const db = require("../config/db");
 
 class DataStorage {
     //일기 저장
-    static async save(daily) {
+    static async save(data) {
+        const date = new Date();
+        const today = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
         return new Promise((resolve, reject) => { //resolve는 성공을, reject는 실패를 반환
-            const query = "INSERT INTO daily(id, create_at) VALUES(?, ?)";
-            db.query(query, (err) => {
+            const query = "INSERT INTO daily(title, user_name, content, create_at, update_at) VALUES( ?, ?, ?, ?, ?)";
+            db.query(query, [data.title, data.userName, data.content, today, today], (err) => {
                 if(err) reject(err);
                 else resolve({ success: true });
             });
