@@ -3,7 +3,7 @@
 
 const logger = require("../../config/logger");
 const Daily = require("../../model/Daily");
-const moment = require("moment");
+const DateToString = require("../../util/DateUtil");
 
 //page
 const output = {
@@ -16,10 +16,7 @@ const output = {
         logger.info(`GET / 200 "메인 화면"`);
         const daily = new Daily(); //서비스 객체 생성
         let response = await daily.read(); //데이터 읽어오기
-        console.log(response.data[0].update_at);
-        response.data[0].create_at = moment(response.data[0].create_at).toString();
-        response.data[0].update_at = moment(response.data[0].update_at).toString();
-
+        
         res.render("main/index", {
             title: "My Diary",
             code: "success",
