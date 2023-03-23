@@ -5,24 +5,23 @@
  * Spring의 Repository
  */
 const db = require("../config/db");
-const DateUtil = require("../util/DateUtil");
 const logger = require("../config/logger");
+const DateUtil = require("../util/DateUtil");
 // #변수 : public -> private로 접근 지정
 
 class DataStorage {
     //일기 리스트 조회
-    static async getDailyList(data) {
+    static getDailyList(data) {
         //처음에는 생성된지 1달치만 조회.
-        let a = data.a;
-        let b = data.b;
-        if(a == undefined && b == undefined) {
-            a = DateUtil.prevMonth(0);
-            b = DateUtil.prevMonth(3);
-            logger.info(a);
-            logger.info(b);
+        var a = data.a;
+        var b = data.b;
+        if(typeof a == "undefined" || typeof b == "undefined") {
+            a = DateUtil.getDateStrYYYYMMDD(DateUtil.prevMonth(3)) + ' 00:00:00';
+            b = DateUtil.getDateStrYYYYMMDD(DateUtil.prevMonth(0)) + ' 00:00:00';
         }
+
         return new Promise((resolve, reject) => { //resolve는 성공을, reject는 실패를 반환
-            const query = "SELECT * FROM daily where create_at between ? and ?";
+            const query = "SELECT * FROM daily Where create_at between ? and ?";
             db.query(query, [a, b], (err, data) => {
                 if(err) reject(`${err}`);
                 else resolve(data);

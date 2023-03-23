@@ -1,6 +1,7 @@
 "use strict"; //ECMA 스크립트 문법 준수
 //자바스크립트 파일을 만들시에는 써줘야함.
 
+const logger = require("../config/logger");
 const moment = require("moment");
 
 const DateUtil = {
@@ -32,8 +33,9 @@ const DateUtil = {
      */
     prevDay: (days) => {
         var d = new Date();
-        var prev = d.getDate() - days;
-        return getDateStrYYYYMMDD(prev);
+        var prev = new Date(d);
+        prev.setMonth(d.getDate() - parseInt(days));
+        return prev;
     },
 
     /**
@@ -43,8 +45,9 @@ const DateUtil = {
      */
     prevMonth: (month) => {
         var d = new Date();
-        var prev = d.getMonth() - month;
-        return getDateStrYYYYMMDD(prev);
+        var prev = new Date(d);
+        prev.setMonth(d.getMonth() - parseInt(month));
+        return prev;
     }
 }
 
