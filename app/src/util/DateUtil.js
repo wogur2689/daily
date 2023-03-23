@@ -34,7 +34,7 @@ const DateUtil = {
     prevDay: (days) => {
         var d = new Date();
         var prev = new Date(d);
-        prev.setMonth(d.getDate() - parseInt(days));
+        prev.setDate(d.getDate() - parseInt(days));
         return prev;
     },
 
@@ -46,7 +46,7 @@ const DateUtil = {
     prevMonth: (month) => {
         var d = new Date();
         var prev = new Date(d);
-        prev.setMonth(d.getMonth() - parseInt(month));
+        prev.setMonth(d.getMonth() + 1 - parseInt(month));
         return prev;
     }
 }

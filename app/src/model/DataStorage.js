@@ -16,8 +16,8 @@ class DataStorage {
         var a = data.a;
         var b = data.b;
         if(typeof a == "undefined" || typeof b == "undefined") {
-            a = DateUtil.getDateStrYYYYMMDD(DateUtil.prevMonth(3)) + ' 00:00:00';
-            b = DateUtil.getDateStrYYYYMMDD(DateUtil.prevMonth(0)) + ' 00:00:00';
+            a = DateUtil.getDateStrYYYYMMDD(DateUtil.prevMonth(3));
+            b = DateUtil.getDateStrYYYYMMDD(DateUtil.prevMonth(0));
         }
 
         return new Promise((resolve, reject) => { //resolve는 성공을, reject는 실패를 반환
@@ -30,10 +30,10 @@ class DataStorage {
     }
 
     //일기 내용보기
-    static async read(data) {
+    static read(data) {
         return new Promise((resolve, reject) => { //resolve는 성공을, reject는 실패를 반환
-            const query = "SELECT * FROM daily where id = ?";
-            db.query(query, [data.id], (err, data) => {
+            const query = "SELECT * FROM daily Where id = ? LIMIT 1";
+            db.query(query, data.id ,(err, data) => {
                 if(err) reject(`${err}`);
                 else resolve(data);
             });
@@ -42,11 +42,10 @@ class DataStorage {
 
     //일기 저장
     static async create(data) {
-        const date = new Date();
-        const today = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+        const today = DateUtil.getDateStrYYYYMMDD(DateUtil.prevDay(0));
         return new Promise((resolve, reject) => { //resolve는 성공을, reject는 실패를 반환
             const query = "INSERT INTO daily(title, user_name, content, create_at, update_at) VALUES( ?, ?, ?, ?, ?)";
-            db.query(query, [data.title, data.userName, data.content, today, today], (err) => {
+            db.query(query, [data.title, data.userName, data.content, today, today], (err, data) => {
                 if(err) reject(err);
                 else resolve({ success: true });
             });
@@ -55,11 +54,11 @@ class DataStorage {
 
     //일기 수정
     static async update(data) {
-        const date = new Date();
-        const today = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+        const today = DateUtil.getDateStrYYYYMMDD(DateUtil.prevDay(0));
+        logger.info(today);
         return new Promise((resolve, reject) => { //resolve는 성공을, reject는 실패를 반환
-            const query = "UPDATE daily SET title = ? user_name = ? content = ? update_at = ? where id = ?";
-            db.query(query, [data.title, data.userName, data.content, today, data.id], (err) => {
+            const query = "UPDATE daily SET title = ?, user_name = ?, content = ?, update_at = ? where id = ?";
+            db.query(query, [data.title, data.userName, data.content, today, data.id], (err, data) => {
                 if(err) reject(err);
                 else resolve({ success: true });
             });
@@ -68,8 +67,7 @@ class DataStorage {
 
     //일기 삭제
     static async delete(data) {
-        const date = new Date();
-        const today = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+        const today = DateUtil.getDateStrYYYYMMDD(DateUtil.prevDay(0));
         return new Promise((resolve, reject) => { //resolve는 성공을, reject는 실패를 반환
             const query = "delete from daily where id = ?";
             db.query(query, [data.id], (err) => {

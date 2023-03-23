@@ -16,24 +16,22 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 <body>
-    <h1>Keeping a Diary</h1>
-<div class="icon-border">
-</p>날짜
-<input type = "date"></import>  
-<!-- 첨부 <input type = "image" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fimg-premium.flaticon.com%2Fpng%2F512%2F4812%2F4812049.png%3Ftoken%3Dexp%3D1630468264%7Ehmac%3D9509f9ac6305365c9073d151225eeb00&type=sc960_832"
-width="13" height="13"> -->
-<h2>
-    제목 : <input type="text" style="width:600px;">
-    <input type = 'button' class='btn' name='btn'value='완료'>
-</h2>
-<h3>
-    <div id="summernote"></div>
-    <!-- <div style ="width: 400px; height:100px;word-break:break-all;overflow:auto;"></div> -->
-</h3>
+  <h1>일기</h1>
+  <h2>
+      제목 : <input type="text" id="title" style="width:600px;" value="<%=daily.title%>">
+      작성자 : <input type="text" id="userName" style="width:50px;" value="<%=daily.user_name%>">
+      <button class="custom-btn btn-3" id="saveBtn">저장하기</button>
+      <button class="custom-btn btn-3" id="dropBtn">삭제하기</button>
+  </h2>
+  <h3>
+      <div id="summernote"></div>
+      <div style ="width: 400px; height:100px;word-break:break-all;overflow:auto;"></div>
+  </h3>
 </body>
 <script>
+  $(document).ready(function() {
     $('#summernote').summernote({
-      height: 300,                 // 에디터 높이
+      height: 200,                 // 에디터 높이
 		  minHeight: null,             // 최소 높이
 		  maxHeight: null,             // 최대 높이
 		  focus: true,                 // 에디터 로딩후 포커스를 맞출지 여부
@@ -56,15 +54,88 @@ width="13" height="13"> -->
 		    // 줄간격
 		    ['height', ['height']],
 		    // 그림첨부, 링크만들기, 동영상첨부
-		    ['insert',['picture','link','video']],
+		    //['insert',['picture','link','video']],
 		    // 코드보기, 확대해서보기, 도움말
+        ['view', ['fullscreen', 'codeview', 'help']]
       ],
         // 추가한 글꼴
 		  fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
 		 // 추가한 폰트사이즈
 		  fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
     });
+
+    //작성한 내용 보여주기
+    var html = "<%= daily.content %>".replace(/<br\/>/ig, "\n"); //br인식
+    html = html.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, ""); //html 제거
+    $('#summernote').summernote('code', html);
+
+    $(document).on('click', '#saveBtn', function () {
+        saveContent();
+    });
+    $(document).on('click', '#dropBtn', function () {
+        dropContent();
+    });
+  })
+
+  //저장
+  function saveContent() {
+      //제목
+      var title = $('#title').val();
+      //작성자
+      var userName = $('#userName').val();
+      //내용
+      var content = $('#summernote').summernote('code');
+      //인덱스
+      var id = "<%= daily.id %>";
+
+      //vaild
+      if(!title) return alert('제목을 입력해주세요.');
+      if(!userName) return alert('작성자를 입력해주세요.');
+      
+      const req = {
+        title: title,
+        userName: userName,
+        content: content,
+        id: id
+      }
+      console.log(req);
+      //서버 전송
+      fetch("http://localhost:3000/update", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req),
+      }).then((res) => {//성공
+        alert('일기가 저장되었습니다.');
+        location.href = '/';
+      }).catch((err) => //실패
+        console.log(err)
+      );
+  }
+
+  //삭제
+  function dropContent() {
+      //키
+      var id = "<%= daily.id %>";
+      
+      const req = {
+        id: id
+      }
+      console.log(req);
+      //서버 전송
+      fetch("http://localhost:3000/delete", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req),
+      }).then((res) => {//성공
+        alert('일기가 삭제되었습니다.');
+        location.href = '/';
+      }).catch((err) => //실패
+        console.log(err)
+      );
+  }
   </script>
 </html>
-
-mysql 

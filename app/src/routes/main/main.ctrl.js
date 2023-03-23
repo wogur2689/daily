@@ -19,11 +19,10 @@ const output = {
         logger.info(`GET / "메인 화면"`);
         const daily = new Daily(req.body); //서비스 객체 생성
         let response = await daily.getDailyList(); //전체 데이터 읽어오기
-        
         res.render("main/index", {
             title: title,
             code: "success",
-            dailys: response.data
+            dailys: response
         }) //파일 랜더링
     },
 
@@ -34,7 +33,6 @@ const output = {
      */
     writePage: (req, res) => {
         logger.info(`GET /write "일기 작성화면"`);
-
         res.render("main/write", {
             title: title,
             code: "success"
@@ -48,27 +46,15 @@ const output = {
      */
     readPage: async(req, res) => {
         logger.info(`GET /read "일기 내용"`);
-        const daily = new Daily(req.params.id); //서비스 객체 생성
-        let response = await daily.read(); //전체 데이터 읽어오기
-        
+        const daily = new Daily(req.params); //서비스 객체 생성
+        let response = await daily.read();
+  
         res.render("main/read", {
             title: title,
-            code: "success"
+            code: "success",
+            daily: response[0]
         }) //파일 랜더링
     },
-
-    /**
-     * 일기 수정
-     * @param {*} req 
-     * @param {*} res 
-     */
-    changePage: (req, res) => {
-        logger.info(`GET /change "일기 수정"`);
-        res.render("main/change", {
-            title: title,
-            code: "success"
-        }) //파일 랜더링
-    }
 }
 
 //api
@@ -83,23 +69,6 @@ const process = {
         const url = {
             method:"POST",
             path:"/create",
-            status: response.err ? 404 : 200,
-        }
-
-        log(response, url);
-        return res.status(url.status).json(response); //json 반환
-    },
-
-    /**
-     * 일기 읽기
-     */
-    read: async (req, res) => {
-        const daily = new Daily(req.body); //서비스 객체 생성
-        const response = await daily.read(); //read
-
-        const url = {
-            method:"POST",
-            path:"/read",
             status: response.err ? 400 : 200,
         }
 
@@ -112,7 +81,7 @@ const process = {
      */
     update: async (req, res) => {
         const daily = new Daily(req.body); //서비스 객체 생성
-        const response = await daily.read(); //read
+        const response = await daily.update(); //수정
 
         const url = {
             method:"POST",
@@ -129,7 +98,7 @@ const process = {
      */
     delete: async (req, res) => {
         const daily = new Daily(req.body); //서비스 객체 생성
-        const response = await daily.read(); //read
+        const response = await daily.delete();
 
         const url = {
             method:"POST",
